@@ -2,6 +2,8 @@
 export class StickyNote {
   noteText: string = "Do the work!";
   element: HTMLElement;
+  titleElement: HTMLElement;
+  inputElement: HTMLInputElement;
   id: number;
   left: number;
   top: number;
@@ -13,6 +15,35 @@ export class StickyNote {
     this.element.style.top = `${this.top}px`;
   }
 
+  public makeTitleElement() {
+    let elem = document.createElement("div");
+    elem.classList.add("title");   
+    elem.addEventListener("click", this.editTitle);   
+    return elem;
+  }
+
+  public setTitle = (e: KeyboardEvent) => {
+    if (e.key === "Enter") {
+      this.titleElement = this.makeTitleElement();
+      this.titleElement.innerText = this.inputElement.value;
+      this.element.removeChild(this.inputElement);
+      this.element.appendChild(this.titleElement);
+   
+    }
+  }
+
+  public editTitle = (e: MouseEvent) => {
+    console.log("Edit me!");
+    e.stopPropagation();
+    let text = this.titleElement.innerText;
+    this.element.removeChild(this.titleElement);
+    this.inputElement = document.createElement("input");
+    this.inputElement.setAttribute("value", text);
+    this.inputElement.classList.add("title");
+    this.element.appendChild(this.inputElement);
+    this.inputElement.addEventListener("keyup", this.setTitle);
+  }
+
   constructor(parent: HTMLElement, id: number) {
 
     // create the element
@@ -20,12 +51,15 @@ export class StickyNote {
     element.classList.add("sticky-note");
     this.left = 200;
     this.top = 200;
-    element.innerText = this.noteText;
+
+    this.titleElement = this.makeTitleElement();
+    this.titleElement.innerText = this.noteText;
 
     // create the top-bar and append
     let topBar = document.createElement("div");
     topBar.classList.add("top-bar");
     element.appendChild(topBar);
+    element.appendChild(this.titleElement);
     element.setAttribute("data-id", String(id));
 
     this.element = element;
