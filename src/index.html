@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World!</title>
+  <style>
+    #main-content {
+      width: 90%;
+      height: 700px;
+      margin: auto;
+      position: relative;
+      border: 1px solid #666;
+      border-radius: 4px;
+    }
+    .sticky-note {
+      width: 150px;
+      min-height: 300px;
+      background-color: yellow;
+      border: 1px solid #666;
+      position: fixed;
+    }
+    .sticky-note .top-bar {
+      width: 100%;
+      height: 20px;
+      background-color: dimgray;
+      cursor: pointer;
+    }
+    .dragging {
+      background-color: red;
+    }
+  </style>
+</head>
+<body>
+  <div id="main-content">
+    <button id="new-note">New Note</button>
+  </div>
+  <script src="bundle.js"></script>
+</body>
+</html>
